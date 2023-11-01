@@ -14,7 +14,11 @@ import com.example.demo.service.ProductoInterface;
 public class ProductoService implements ProductoInterface {
 
     @Autowired
-    private ProductoRepository productoRepository;
+    public ProductoRepository productoRepository;
+
+    public ProductoService(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
+    }
 
     @Override
     public List<Producto> mostrarProducto() {
