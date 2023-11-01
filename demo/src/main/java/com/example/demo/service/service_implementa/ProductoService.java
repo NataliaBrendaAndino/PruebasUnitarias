@@ -42,6 +42,8 @@ public class ProductoService implements ProductoInterface {
     public Producto actualizarProducto(Long id, Producto producto) {
         Producto productoAux = productoRepository.findById(id).get();
         productoAux.setNombre(producto.getNombre());
+        productoAux.setPrecio(producto.getStock());
+        productoAux.setStock(producto.getStock());
         productoRepository.save(productoAux);
         return productoAux;
     }
