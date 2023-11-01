@@ -52,4 +52,13 @@ public class ProductoRepositoryTest {
 
         assertThat(producto3).isNull();
     }
+//    @Test
+//    public void testFindByPrecio_Found() {
+//        int precio = 1000;
+//
+//        Producto producto2 = productoRepository.findByPrecio(precio);
+//        assertThat(producto2).isNotNull();
+//        assertThat(producto2.getPrecio()).isEqualTo(precio);
+//
+//    }
 }

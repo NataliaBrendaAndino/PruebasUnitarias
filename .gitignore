@@ -1,0 +1,2 @@
+./demo/src/main/resources/application.properties
+./demo/src/test/resources/application-test.properties
