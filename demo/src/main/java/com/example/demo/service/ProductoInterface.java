@@ -12,6 +12,10 @@ public interface ProductoInterface {
 
     public Producto buscarProductoXNombre(String nombre);
 
+    public Producto buscarProductoXPrecio(int precio);
+
+    public Producto buscarProductoXStock(int stock);
+
     public Producto guardarProducto(Producto producto);
 
     public Producto actualizarProducto(Long id, Producto producto);

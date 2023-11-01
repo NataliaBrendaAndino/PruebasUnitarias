@@ -34,6 +34,16 @@ public class ProductoService implements ProductoInterface {
     }
 
     @Override
+    public Producto buscarProductoXPrecio(int precio) {
+        return productoRepository.findByPrecio(precio);
+    }
+
+    @Override
+    public Producto buscarProductoXStock(int stock) {
+        return productoRepository.findByStock(stock);
+    }
+
+    @Override
     public Producto guardarProducto(Producto producto) {
         return productoRepository.save(producto);
     }

@@ -56,6 +56,22 @@ public class ProductoController {
         }
     }
 
+    @GetMapping("/precio/{precio}")
+    public ResponseEntity<?> buscarProductoXPrecio(@PathVariable int precio) {
+        try {
+            return new ResponseEntity<>(productoService.buscarProductoXPrecio(precio), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new RecursoNoEncontrado().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/stock/{stock}")
+    public ResponseEntity<?> buscarProductoXStock(@PathVariable int stock) {
+        try {
+            return new ResponseEntity<>(productoService.buscarProductoXStock(stock), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new RecursoNoEncontrado().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @PostMapping
     public ResponseEntity<ModelResponse> guardarProducto(@RequestBody Producto producto) {
         try {

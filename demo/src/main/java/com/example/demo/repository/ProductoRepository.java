@@ -9,4 +9,8 @@ import com.example.demo.entity.Producto;
 public interface ProductoRepository extends CrudRepository<Producto, Long> {
 
     public abstract Producto findByNombre(String nombre);
+
+    public abstract Producto findByPrecio(int precio);
+    public abstract Producto findByStock(int stock);
+
 }
