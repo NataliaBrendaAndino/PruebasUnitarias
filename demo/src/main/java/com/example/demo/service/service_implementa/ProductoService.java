@@ -38,8 +38,13 @@ public class ProductoService implements ProductoInterface {
     }
 
     @Override
-    public Producto guardarProducto(Producto producto) {
-        return productoRepository.save(producto);
+    public ModelResponse guardarProducto(Producto producto) {
+        try {
+            productoRepository.save(producto);
+            return new ModelResponse("Producto guardado", "Operación: guardarProducto");
+        } catch (Exception e) {
+            return new ModelResponse("Error al guardar producto", "Tipo: " + e.getClass().getName());
+        }
     }
 
     @Override
