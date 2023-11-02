@@ -1,8 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +48,24 @@ public class ProductoController {
     public ResponseEntity<?> buscarProductoXNombre(@PathVariable String nombre) {
         try {
             return new ResponseEntity<>(productoService.buscarProductoXNombre(nombre), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new RecursoNoEncontrado().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+        @GetMapping("/categoria/{categoria}")
+        public ResponseEntity<?> buscarXcategoria(@PathVariable String categoria) {
+        try {
+            return new ResponseEntity<>(productoService.buscarXcategoria(categoria), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new RecursoNoEncontrado().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+        @GetMapping("/calificacion/{calificacion}")
+        public ResponseEntity<?> buscarXcalificacion(@PathVariable int cali) {
+        try {
+            return new ResponseEntity<>(productoService.buscarXcalificacion(cali), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(new RecursoNoEncontrado().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

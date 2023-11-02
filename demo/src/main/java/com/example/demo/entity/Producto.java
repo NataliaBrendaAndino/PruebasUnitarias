@@ -26,4 +26,10 @@ public class Producto {
 
     @Column(unique = true, nullable = false)
     protected String nombre;
+
+    @Column(nullable = false)
+    private String categoria;
+
+    @Column(nullable = false)
+    private int calificacion;
 }

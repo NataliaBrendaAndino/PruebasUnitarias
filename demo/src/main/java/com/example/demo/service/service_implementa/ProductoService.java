@@ -24,14 +24,33 @@ public class ProductoService implements ProductoInterface {
     @Override
     public Producto buscarProductoXId(Long id) {
         return productoRepository.findById(id).get();
-
+        
     }
-
+    
     @Override
     public Producto buscarProductoXNombre(String nombre) {
         return productoRepository.findByNombre(nombre);
-
+        
     }
+    
+    @Override
+    public Producto buscarXcategoria(String categoria) {
+        try {
+            return (Producto) productoRepository.findByCategoria(categoria);
+        } catch (Exception e) {
+            throw new UnsupportedOperationException("Unimplemented method 'buscarXcategoria'");
+        }
+    }
+
+    @Override
+    public Producto buscarXcalificacion(int calificacion) {
+        try {
+            return (Producto) productoRepository.findByCalificacion(calificacion);
+        } catch (Exception e) {
+            throw new UnsupportedOperationException("Unimplemented method 'buscarXcalificacion'");
+        }
+    }
+    
 
     @Override
     public Producto guardarProducto(Producto producto) {
@@ -55,5 +74,6 @@ public class ProductoService implements ProductoInterface {
             return new ModelResponse("Error al eliminar el producto", "Id no encontrado");
         }
     }
+
 
 }
