@@ -8,9 +8,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import com.example.demo.entity.Producto;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles("test")
 @DataJpaTest
 public class ProductoRepositoryTest {
 
@@ -26,6 +28,8 @@ public class ProductoRepositoryTest {
     public void setUp() {
         producto = new Producto();
         producto.setNombre("Pantalon");
+        producto.setPrecio(2400);
+        producto.setStock(2);
         entityManager.persist(producto);
     }
 
@@ -52,13 +56,32 @@ public class ProductoRepositoryTest {
 
         assertThat(producto3).isNull();
     }
-//    @Test
-//    public void testFindByPrecio_Found() {
-//        int precio = 1000;
-//
-//        Producto producto2 = productoRepository.findByPrecio(precio);
-//        assertThat(producto2).isNotNull();
-//        assertThat(producto2.getPrecio()).isEqualTo(precio);
-//
-//    }
+    @Test
+    public void testFindByPrecio_Found() {
+        int precio = 2400;
+        Producto producto2 = productoRepository.findByPrecio(precio);
+        assertThat(producto2).isNotNull();
+        assertThat(producto2.getPrecio()).isEqualTo(precio);
+
+    }
+    @Test
+    public void testFindByPrecio_NotFound(){
+        int precio = 123;
+        Producto producto3 = productoRepository.findByPrecio(precio);
+        assertThat(producto3).isNull();
+    }
+    @Test
+    public void testFindByStock_Found() {
+        int stock = 2;
+        Producto producto2 = productoRepository.findByStock(stock);
+        assertThat(producto2).isNotNull();
+        assertThat(producto2.getStock()).isEqualTo(stock);
+
+    }
+    @Test
+    public void testFindByStock_NotFound(){
+        int stock = 123;
+        Producto producto3 = productoRepository.findByStock(stock);
+        assertThat(producto3).isNull();
+    }
 }
