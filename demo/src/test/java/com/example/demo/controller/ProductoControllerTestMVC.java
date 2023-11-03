@@ -9,7 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-
+//con static no hacemos que la clase sea estática (que no se instancie o no herede), sino que 
+//podemos acceder de manera más legible a los miembros de esa librería
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
