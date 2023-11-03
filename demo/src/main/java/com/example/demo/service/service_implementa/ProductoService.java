@@ -1,5 +1,6 @@
 package com.example.demo.service.service_implementa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,26 @@ public class ProductoService implements ProductoInterface {
     }
 
     @Override
+    public Producto buscarProductoXColor(String color) {
+        return productoRepository.findByProducto(color);
+    }
+
+    @Override
+    public List<Producto> buscarProductoXPrecio(float preciomin, float preciomax) {
+        List<Producto> lista = new ArrayList<>();
+        lista = productoRepository.findByProducto(preciomin, preciomax);
+        List<Producto> retorno = new ArrayList<>();
+
+        for(Producto listaaux : lista)
+        {
+            if((listaaux.getPrecio() >= preciomin) && (listaaux.getPrecio() <= preciomax))
+            retorno.add(listaaux);
+        }
+
+        return retorno;
+    }
+
+    @Override
     public Producto guardarProducto(Producto producto) {
         return productoRepository.save(producto);
     }
@@ -55,5 +76,4 @@ public class ProductoService implements ProductoInterface {
             return new ModelResponse("Error al eliminar el producto", "Id no encontrado");
         }
     }
-
 }

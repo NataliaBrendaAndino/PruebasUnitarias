@@ -26,4 +26,10 @@ public class Producto {
 
     @Column(unique = true, nullable = false)
     protected String nombre;
+
+    @Column(unique = true, nullable = false)
+    protected float precio;
+
+    @Column(unique = true, nullable = false)
+    protected String color;
 }

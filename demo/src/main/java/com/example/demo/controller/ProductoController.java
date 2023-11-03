@@ -56,6 +56,16 @@ public class ProductoController {
         }
     }
 
+    @GetMapping("/color/{color}")
+    public ResponseEntity<?> buscarProductoXColor(@PathVariable String color) {
+        try{
+            return new ResponseEntity<>(productoService.buscarProductoXColor(color), HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            return new ResponseEntity<>(new RecursoNoEncontrado().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<ModelResponse> guardarProducto(@RequestBody Producto producto) {
         try {
