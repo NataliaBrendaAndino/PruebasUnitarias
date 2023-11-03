@@ -12,9 +12,13 @@ public interface ProductoInterface {
 
     public Producto buscarProductoXNombre(String nombre);
 
+    public List<Producto> buscarProductoXRangoDePrecio(int rango1, int rango2);
+
     public Producto guardarProducto(Producto producto);
 
     public Producto actualizarProducto(Long id, Producto producto);
+
+    public Producto actualizarStock(Long id, int precio);
 
     public ModelResponse eliminarProducto(Long id);
 }

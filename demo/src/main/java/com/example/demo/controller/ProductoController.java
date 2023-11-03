@@ -1,8 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +53,42 @@ public class ProductoController {
         }
     }
 
+    @GetMapping("/rango/{r1}/{r2}")
+    public ResponseEntity<?> buscarProductosPorRangoDePrecio(@PathVariable int rango1, @PathVariable int rango2) {
+        try {
+            return new ResponseEntity<>(productoService.buscarProductoXRangoDePrecio(rango1, rango2), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(new RecursoNoEncontrado().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/actualizar-precio/{id}/{stock}")
+    public ResponseEntity<?> actualizarStock(@PathVariable long id, @PathVariable int stock) { 
+
+        try {
+            return new ResponseEntity<>(productoService.actualizarStock(id, stock), HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new ModelResponse("Error al actualizar el precio del producto",
+                            e.getClass().getName()));
+        }
+
+    }
+
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
+        try {
+            return new ResponseEntity<>(productoService.actualizarProducto(id, producto), HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new ModelResponse("Error al actualizar producto",
+                            e.getClass().getName()));
+        }
+    }
+
+
     @PostMapping
     public ResponseEntity<ModelResponse> guardarProducto(@RequestBody Producto producto) {
         try {
@@ -71,16 +104,7 @@ public class ProductoController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarProducto(@PathVariable Long id, @RequestBody Producto producto) {
-        try {
-            return new ResponseEntity<>(productoService.actualizarProducto(id, producto), HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ModelResponse("Error al actualizar producto",
-                            e.getClass().getName()));
-        }
-    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarProducto(@PathVariable Long id) {

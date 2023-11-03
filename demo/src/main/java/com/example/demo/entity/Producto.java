@@ -26,4 +26,8 @@ public class Producto {
 
     @Column(unique = true, nullable = false)
     protected String nombre;
+    
+    protected int precio;
+    protected int stock;
+
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service.service_implementa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,32 @@ public class ProductoService implements ProductoInterface {
         return productoRepository.findByNombre(nombre);
 
     }
+
+    @Override
+    public List<Producto> buscarProductoXRangoDePrecio(int rango1, int rango2) {
+
+        List<Producto> productos = new ArrayList<>();
+        productos = (List<Producto>) productoRepository.findAll();
+        List<Producto> productosRango = new ArrayList<>();
+
+        for (Producto producto : productos) {
+            if (producto.getPrecio() >= rango1 && producto.getPrecio() <= rango2) {
+                productosRango.add(producto);
+                return productosRango;
+            }
+        }
+        return productosRango;
+    }
+
+    @Override
+    public Producto actualizarStock(Long id, int stock){
+        
+        Producto productoAux = productoRepository.findById(id).get();
+        productoAux.setStock(stock);
+        productoRepository.save(productoAux);
+        return productoAux;
+    }
+
 
     @Override
     public Producto guardarProducto(Producto producto) {

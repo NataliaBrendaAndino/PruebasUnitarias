@@ -24,8 +24,10 @@ public class ProductoRepositoryTest {
 
     @BeforeEach
     public void setUp() {
+        //Inicio un producto en la DB, en base al cual realizare los Test
         producto = new Producto();
         producto.setNombre("Pantalon");
+        producto.setPrecio(1000);
         entityManager.persist(producto);
     }
 
@@ -51,5 +53,34 @@ public class ProductoRepositoryTest {
         Producto producto3 = productoRepository.findByNombre(nombre);
 
         assertThat(producto3).isNull();
+    }
+
+    @Test
+    public void testFindByPrecio_Found(){
+        //Testear que me devuelva el producto que busco en base a un precio dado
+        int precio = 1000; //establezco un precio
+
+        Producto producto2 = productoRepository.findByPrecio(precio);
+        //Busco un producto en base a ese precio
+
+        assertThat(producto2).isNotNull();
+        //No deberia devolverme un null, ya que existe un producto con ese precio
+
+        assertThat(producto2.getPrecio()).isEqualTo(precio);
+        //El precio del producto que obtuve, deberia ser igual al precio establecido
+    }
+
+    @Test
+    public void testFindByPrecio_NotFound(){
+        //Testear que no me devuelva un producto, en base a un precio dado
+
+        int precio = 50; //establezco un precio
+
+        Producto producto2 = productoRepository.findByPrecio(precio);
+        //Busco un producto en base a ese precio
+
+        assertThat(producto2).isNull();
+        //Deberia devolverme un null, ya que NO existe un producto con ese precio
+
     }
 }
