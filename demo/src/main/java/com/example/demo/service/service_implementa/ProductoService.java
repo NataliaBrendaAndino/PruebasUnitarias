@@ -15,7 +15,14 @@ import com.example.demo.service.ProductoInterface;
 public class ProductoService implements ProductoInterface {
 
     @Autowired
-    private ProductoRepository productoRepository;
+    public ProductoRepository productoRepository;
+
+    public ProductoService(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
+    }
+
+    public ProductoService() {
+    }
 
     @Override
     public List<Producto> mostrarProducto() {
@@ -61,8 +68,13 @@ public class ProductoService implements ProductoInterface {
 
 
     @Override
-    public Producto guardarProducto(Producto producto) {
-        return productoRepository.save(producto);
+    public ModelResponse guardarProducto(Producto producto) {
+        try {
+            productoRepository.save(producto);
+            return new ModelResponse("Producto guardado", "Operación: guardarProducto");
+        } catch (Exception e) {
+            return new ModelResponse("Error al guardar producto", "Tipo: " + e.getClass().getName());
+        }
     }
 
     @Override

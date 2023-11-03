@@ -14,7 +14,7 @@ public interface ProductoInterface {
 
     public List<Producto> buscarProductoXRangoDePrecio(int rango1, int rango2);
 
-    public Producto guardarProducto(Producto producto);
+    public ModelResponse guardarProducto(Producto producto);
 
     public Producto actualizarProducto(Long id, Producto producto);
 
