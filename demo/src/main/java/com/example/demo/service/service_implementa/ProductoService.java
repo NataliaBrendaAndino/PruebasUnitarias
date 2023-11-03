@@ -20,6 +20,9 @@ public class ProductoService implements ProductoInterface {
         this.productoRepository = productoRepository;
     }
 
+    public ProductoService() {
+    }
+
     @Override
     public List<Producto> mostrarProducto() {
         return (List<Producto>) productoRepository.findAll();
