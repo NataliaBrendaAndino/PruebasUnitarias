@@ -21,6 +21,13 @@ public class ProductoService implements ProductoInterface {
         return (List<Producto>) productoRepository.findAll();
     }
 
+    public ProductoService (ProductoRepository productoRepository){
+        this.productoRepository = productoRepository;
+    }
+
+    public ProductoService() {
+    }
+
     @Override
     public Producto buscarProductoXId(Long id) {
         return productoRepository.findById(id).get();
