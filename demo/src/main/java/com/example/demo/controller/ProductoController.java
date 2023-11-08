@@ -52,7 +52,7 @@ public class ProductoController {
         try {
             return new ResponseEntity<>(productoService.buscarProductoXNombre(nombre), HttpStatus.OK);
         } catch (Exception ex) {
-            returj new ResponseEntity<>(new RecursoNoEncontrado().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new RecursoNoEncontrado().getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
