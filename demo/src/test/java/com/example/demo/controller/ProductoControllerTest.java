@@ -19,8 +19,12 @@ import com.example.demo.exceptions.RecursoNoEncontrado;
 import com.example.demo.service.service_implementa.ProductoService;
 
 public class ProductoControllerTest {
+    //A la hora de testear vuelve a hacer uso del servicio
 
-    @InjectMocks
+    @InjectMocks //Es propia de mockito
+    //Desde inject obtengo el comportamiento real de mi controlador, falseo el controlado
+    // MockBean es de springboot y trae todo general. 
+    // Necesita aclaraciones previas para funcionar  
     private ProductoController productoController;
 
     @Mock

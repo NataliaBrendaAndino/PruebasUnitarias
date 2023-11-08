@@ -21,11 +21,15 @@ import com.example.demo.entity.Producto;
 import com.example.demo.service.service_implementa.ProductoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest
+@WebMvcTest 
+//Permite probar específicamente la lógica de los controladores 
+//y cómo gestionan las solicitudes y respuestas HTTP.
 public class ProductoControllerTestMVC {
+    //No vuelve a tester el servicio, sino que hace incapie en los entitys y endpoint
 
     @Autowired
     private MockMvc mockMvc;
+    //la proporciona mockito y permite hacer testeos para endpoints
 
     @InjectMocks
     private ProductoController productoController;
@@ -48,8 +52,12 @@ public class ProductoControllerTestMVC {
     @Test
     public void testListarProductosEndpoint() throws Exception {
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/producto"))
+        //desde el mockMva ejecutamos .perform (performance de como funcionaria una ruta)
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/producto")) 
+                //Hace una llamada a la ruta,detipo get
+
                 .andExpect(MockMvcResultMatchers.status().isOk());
+                //Establece el tipo de estado que espera
     }
 
     // completar: buscarProductoXId, buscarProductoXNombre
@@ -59,9 +67,14 @@ public class ProductoControllerTestMVC {
     void testGuardarProductoEndpoint() throws Exception {
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/producto")
+        //Hago una peticion de tipo post a la ruta indicada
                 .contentType(MediaType.APPLICATION_JSON)
+        //Declaro el tipo de contenido (JSON) que se maneja
                 .content(new ObjectMapper().writeValueAsString(producto)))
+        /*le ingresa un objetMapper(de la libreria jackson) 
+        que le indicamos el cuerpo del json de la peticion (producto)*/
                 .andExpect(MockMvcResultMatchers.status().isCreated());
+                //Indicamos el tipo de estado que esperamos
     }
 
     // completar el fallido
@@ -71,6 +84,8 @@ public class ProductoControllerTestMVC {
         Long id = 1L;
 
         this.mockMvc.perform(put("/producto/{id}", id)
+        // import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+        //como especifico la ruta, puedo llamarla directamente
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(producto)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
