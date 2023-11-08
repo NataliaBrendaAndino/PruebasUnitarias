@@ -12,6 +12,7 @@ import com.example.demo.entity.Producto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 public class ProductoRepositoryTest {
@@ -42,19 +43,19 @@ public class ProductoRepositoryTest {
     public void testFindByNombre_Found() {
         String nombre = "Pantalon";
 
-        Producto producto2 = productoRepository.findByNombre(nombre);
+        Optional<Producto> producto2 = productoRepository.findByNombre(nombre);
 
         assertThat(producto2).isNotNull();
-        assertThat(producto2.getNombre()).isEqualTo(nombre);
+        assertThat(producto2.get().getNombre()).isEqualTo(nombre);
     }
 
     @Test
     public void testFindByNombre_NotFound() {
         String nombre = "Camiseta";
 
-        Producto producto3 = productoRepository.findByNombre(nombre);
+        Optional<Producto> producto3 = productoRepository.findByNombre(nombre);
 
-        assertThat(producto3).isNull();
+        assertThat(producto3).isEmpty();
     }
 
     @Test

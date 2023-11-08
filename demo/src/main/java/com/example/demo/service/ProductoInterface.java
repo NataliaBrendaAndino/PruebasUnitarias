@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.demo.entity.Producto;
 import com.example.demo.response.ModelResponse;
@@ -8,17 +9,17 @@ import com.example.demo.response.ModelResponse;
 public interface ProductoInterface {
     public List<Producto> mostrarProducto();
 
-    public Producto buscarProductoXId(Long id);
+    public Optional<Producto> buscarProductoXId(Long id);
 
-    public Producto buscarProductoXNombre(String nombre);
+    public Optional<Producto> buscarProductoXNombre(String nombre);
 
-    public Producto buscarXcategoria(String categoria);
+    public List<Producto> buscarXcategoria(String categoria);
 
-    public Producto buscarXcalificacion(int calificacion);
+    public List<Producto> buscarXcalificacion(int calificacion);
 
-    public Producto guardarProducto(Producto producto);
+    public Optional<?> guardarProducto(Producto producto);
 
-    public Producto actualizarProducto(Long id, Producto producto);
+    public Optional<?> actualizarProducto(Long id, Producto producto);
 
     public ModelResponse eliminarProducto(Long id);
 }

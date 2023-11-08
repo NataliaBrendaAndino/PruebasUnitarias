@@ -1,6 +1,8 @@
 package com.example.demo.service.service_implementa;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,36 +18,44 @@ public class ProductoService implements ProductoInterface {
     @Autowired
     private ProductoRepository productoRepository;
 
+    //Este constructor existe unicamente con el proposito de facilitar la inyeccion en pruebas unitarias sin cargar todo el contexto de spring
+    public ProductoService(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
+    }
+
     @Override
     public List<Producto> mostrarProducto() {
         return (List<Producto>) productoRepository.findAll();
     }
 
     @Override
-    public Producto buscarProductoXId(Long id) {
-        return productoRepository.findById(id).get();
-        
+    public Optional<Producto> buscarProductoXId(Long id) {
+        return productoRepository.findById(id);
     }
     
     @Override
-    public Producto buscarProductoXNombre(String nombre) {
+    public Optional<Producto> buscarProductoXNombre(String nombre) {
         return productoRepository.findByNombre(nombre);
         
     }
     
     @Override
-    public Producto buscarXcategoria(String categoria) {
+    public List<Producto> buscarXcategoria(String categoria) {
         try {
-            return (Producto) productoRepository.findByCategoria(categoria);
+            List<Producto> lista = new ArrayList<>();
+            lista = productoRepository.findByCategoria(categoria);
+            return lista;
         } catch (Exception e) {
             throw new UnsupportedOperationException("Unimplemented method 'buscarXcategoria'");
         }
     }
 
     @Override
-    public Producto buscarXcalificacion(int calificacion) {
+    public List<Producto> buscarXcalificacion(int calificacion) {
         try {
-            return (Producto) productoRepository.findByCalificacion(calificacion);
+            List<Producto> lista = new ArrayList<>();
+            lista = productoRepository.findByCalificacion(calificacion);
+            return lista;
         } catch (Exception e) {
             throw new UnsupportedOperationException("Unimplemented method 'buscarXcalificacion'");
         }
@@ -53,16 +63,17 @@ public class ProductoService implements ProductoInterface {
     
 
     @Override
-    public Producto guardarProducto(Producto producto) {
-        return productoRepository.save(producto);
+    public Optional<?> guardarProducto(Producto producto) {
+        Producto productoGuardado = productoRepository.save(producto);
+        return Optional.of(productoGuardado);
     }
 
     @Override
-    public Producto actualizarProducto(Long id, Producto producto) {
+    public Optional<?> actualizarProducto(Long id, Producto producto) {
         Producto productoAux = productoRepository.findById(id).get();
         productoAux.setNombre(producto.getNombre());
         productoRepository.save(productoAux);
-        return productoAux;
+        return Optional.of(productoAux);
     }
 
     @Override
