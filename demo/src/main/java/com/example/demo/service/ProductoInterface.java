@@ -16,7 +16,7 @@ public interface ProductoInterface {
 
     public Producto buscarProductoXStock(int stock);
 
-    public Producto guardarProducto(Producto producto);
+    public ModelResponse guardarProducto(Producto producto);
 
     public Producto actualizarProducto(Long id, Producto producto);
 

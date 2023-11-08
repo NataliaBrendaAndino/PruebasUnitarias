@@ -33,8 +33,8 @@ public class ProductoControllerTest {
         MockitoAnnotations.openMocks(this);
 
         productos = new ArrayList<>();
-        productos.add(new Producto(1L, "Producto1"));
-        productos.add(new Producto(2L, "Producto2"));
+        productos.add(new Producto(1L, "Producto1", 200, 1222));
+        productos.add(new Producto(2L, "Producto2", 300, 122));
     }
 
     @Test

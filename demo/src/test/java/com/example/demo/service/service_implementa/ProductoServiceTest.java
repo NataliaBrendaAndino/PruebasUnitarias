@@ -31,6 +31,7 @@ public class ProductoServiceTest {
     Producto productoFalseado;
     List<Producto> productos;
     Long id;
+    Long id2;
 
     @BeforeEach
     void setUp() {
@@ -40,11 +41,12 @@ public class ProductoServiceTest {
         productoService = new ProductoService(productoRepository);
         // instanciamos un producto de prueba
         id = 1L;
-        productoFalseado = new Producto(id, "Pintorcito");
+        id2 = 2L;
+        productoFalseado = new Producto(id, "Pintorcito", 122, 120);
         // creamos una lista con dos productos
         productos = new ArrayList<>();
         productos.add(productoFalseado);
-        productos.add(new Producto(2L, "Babero"));
+        productos.add(new Producto(id2, "Babero", 122, 80));
     }
 
     @AfterEach
@@ -75,7 +77,7 @@ public class ProductoServiceTest {
 
         // Verifica que se obtenga un producto con el ID especificado
         assertThat(productoPrueba).isNotNull();
-        assertThat(productoPrueba.getId()).isEqualTo(id);
+        assertThat(productoPrueba.getId()).isEqualTo(1L);
     }
 
     // @Test
@@ -106,7 +108,7 @@ void testGuardarProductoError() {
     ModelResponse response = productoService.guardarProducto(productoFalseado);
 
     // Verifica que se devuelva un mensaje de error
-    assertThat(response.getMensaje()).isEqualTo("Error al guardar producto");
+    assertThat(response.getMensaje()).isEqualTo("Error al guardar el producto");
     assertThat(response.getTipo()).isEqualTo("Tipo: java.lang.RuntimeException"); // El tipo de excepción
 }
 
@@ -117,7 +119,7 @@ void testActualizarProducto() {
 
     // Producto de prueba con un nombre modificado
     String piluso = "piluso";
-    Producto productoModificado = new Producto(id, piluso);
+    Producto productoModificado = new Producto(id, piluso, 100, 2333);
 
     // Llamamos al método actualizarProducto del servicio
     Producto resultado = productoService.actualizarProducto(id, productoModificado);

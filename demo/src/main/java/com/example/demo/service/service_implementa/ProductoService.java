@@ -51,15 +51,20 @@ public class ProductoService implements ProductoInterface {
     }
 
     @Override
-    public Producto guardarProducto(Producto producto) {
-        return productoRepository.save(producto);
+    public ModelResponse guardarProducto(Producto producto) {
+        try {
+            productoRepository.save(producto);
+            return new ModelResponse("Producto guardado", "Operación: guardarProducto");
+        } catch (Exception e){
+            return new ModelResponse("Error al guardar el producto", "Tipo: " + e.getClass().getName());
+        }
     }
 
     @Override
     public Producto actualizarProducto(Long id, Producto producto) {
         Producto productoAux = productoRepository.findById(id).get();
         productoAux.setNombre(producto.getNombre());
-        productoAux.setPrecio(producto.getStock());
+        productoAux.setPrecio(producto.getPrecio());
         productoAux.setStock(producto.getStock());
         productoRepository.save(productoAux);
         return productoAux;

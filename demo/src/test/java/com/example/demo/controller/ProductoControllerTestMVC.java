@@ -39,10 +39,10 @@ public class ProductoControllerTestMVC {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        producto = new Producto(1L, "Pintorcito");
+        producto = new Producto(1L, "Pintorcito", 122, 900);
         productos = new ArrayList<>();
         productos.add(producto);
-        productos.add(new Producto(2L, "Babero"));
+        productos.add(new Producto(2L, "Babero", 122, 899));
     }
 
     @Test
