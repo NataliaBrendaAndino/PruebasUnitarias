@@ -21,6 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ProductoServiceTest {
+    //testeamos el flujo de informacion entre servicio y repositorio, y no la persistencia en si, que lo testeamos en el test del servicio.
 
     private ProductoService productoService;
 
@@ -55,12 +56,21 @@ public class ProductoServiceTest {
     @Test
     void testMostrarProducto() {
         // Configura el comportamiento del repositorio mockeado
+
+        //Quiero probar el metodo .mostrarProducto
+        //Este metodo (al observarlo en el ProductoService) hace uso del metodo .findAll del repositorio
+
+        /*Por esto, primero debemos simular ese metodo (.findAll), para indicarle a nuestro mock del repositorio 
+        como deberia comportarse si se llama a ese metodo. 
+        En este caso le indicamos que cuando se llame a la funcion .findAll, deberia ejecutar .thenReturn(productos); */
+        // Configura el comportamiento del repositorio mockeado
         when(productoRepository.findAll()).thenReturn(productos);
 
+        //Una vez indicado el comportamiento del mock del repositorio, probamos y ejecutamos el metodo del servicio en si (.mostrarProducto).
         List<Producto> productosTest = productoService.mostrarProducto();
-        
 
         // Verifica que se devuelva una lista no vacía
+         //Luego, indicamos lo que esperamos de la ejecucion del servicio, con assertThat ()
         assertThat(productosTest).isNotEmpty();
     }
 
