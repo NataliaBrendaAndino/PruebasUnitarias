@@ -19,6 +19,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Producto {
+    public Producto(long l, String string) {
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
