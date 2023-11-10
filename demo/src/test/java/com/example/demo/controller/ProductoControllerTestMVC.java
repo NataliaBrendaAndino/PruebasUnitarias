@@ -60,8 +60,31 @@ public class ProductoControllerTestMVC {
                 //Establece el tipo de estado que espera
     }
 
-    // completar: buscarProductoXId, buscarProductoXNombre
-    // tanto caso exitoso como fallido
+    @Test 
+    void testBuscarProductoXId() throws Exception{
+        Long id = 1L;
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/producto/{id}", id))
+        .andExpect(MockMvcResultMatchers.status().isOk()); 
+    }
+
+    @Test 
+    void testBuscarProductoXId_Fallido() throws Exception{
+        Long id = 1L;
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/productos/{idd}", id))
+        .andExpect(MockMvcResultMatchers.status().isBadRequest()); 
+    }
+
+    @Test 
+    void testBuscarProductoXNombre() throws Exception{
+        String nombre = "Gorra";
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/producto/nombre/{nombre}", nombre))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test 
+    void testBuscarProductoXNombre_Fallido() throws Exception{
+
+    }
 
     @Test
     void testGuardarProductoEndpoint() throws Exception {
@@ -77,7 +100,9 @@ public class ProductoControllerTestMVC {
                 //Indicamos el tipo de estado que esperamos
     }
 
-    // completar el fallido
+    @Test
+    void testGuardarProductoEndpoint_Fallido() throws Exception {
+    }
 
     @Test
     void testActualizarProductoEndpoint() throws Exception {
@@ -91,8 +116,17 @@ public class ProductoControllerTestMVC {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    // completar el fallido
+    @Test
+    void testActualizarProductoEndpoint_Fallido() throws Exception {
+    }
 
-    // completar DELETE :O
+    @Test
+    void testEliminarProducto() throws Exception{
+        Long id = 1L;
+
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/producto/{id}", id))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
 
 }

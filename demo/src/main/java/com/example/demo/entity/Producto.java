@@ -19,7 +19,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Producto {
-    public Producto(long l, String string) {
+    public Producto(long l, String nombre) {
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

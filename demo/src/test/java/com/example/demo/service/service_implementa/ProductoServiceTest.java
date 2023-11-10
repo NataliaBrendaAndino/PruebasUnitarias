@@ -32,6 +32,7 @@ public class ProductoServiceTest {
     Producto productoFalseado;
     List<Producto> productos;
     Long id;
+    String nombre;
 
     @BeforeEach
     void setUp() {
@@ -41,11 +42,12 @@ public class ProductoServiceTest {
         productoService = new ProductoService(productoRepository);
         // instanciamos un producto de prueba
         id = 1L;
-        productoFalseado = new Producto(id, "Pintorcito");
+        nombre = "Pintorcito";
+        productoFalseado = new Producto(id, nombre, 2500, 50);
         // creamos una lista con dos productos
         productos = new ArrayList<>();
         productos.add(productoFalseado);
-        productos.add(new Producto(2L, "Babero"));
+        productos.add(new Producto(2L, "Babero", 1000, 36));
     }
 
     @AfterEach
@@ -88,60 +90,89 @@ public class ProductoServiceTest {
         assertThat(productoPrueba.getId()).isEqualTo(id);
     }
 
-    // @Test
+    @Test
     void testBuscarProductoXNombre() {
-        // Completar
+         
+        when(productoRepository.findByNombre(nombre)).thenReturn(productoFalseado);
+
+        Producto productoPrueba = productoService.buscarProductoXNombre("Pintorcito");
+
+        assertThat(productoPrueba).isNotNull();
+        assertThat(productoPrueba.getNombre()).isEqualTo(nombre);
+    }
+   
+    @Test
+    void buscarProductoXRangoDePrecio(){
+        when(productoRepository.findAll()).thenReturn(productos);
+
+        List<Producto> productosTest = productoService.buscarProductoXRangoDePrecio(2000, 3000);
+
+        assertThat(productosTest.contains(productoFalseado));
     }
 
-@Test
-void testGuardarProducto() {
-    // Configura el comportamiento del repositorio mock
-    when(productoRepository.save(productoFalseado)).thenReturn(productoFalseado);
+    @Test
+    void actualizarStock(){
 
-    // Llama al método guardarProducto
-    ModelResponse response = productoService.guardarProducto(productoFalseado);
+        when(productoRepository.findById(id)).thenReturn(Optional.of(productoFalseado));
 
-    // Verifica que se devuelva un mensaje de éxito
-    assertThat(response.getMensaje()).isEqualTo("Producto guardado");
-    assertThat(response.getTipo()).isEqualTo("Operación: guardarProducto");
-}
+        int stock = 100;
 
-@Test
-void testGuardarProductoError() {
-    // Configuramos el comportamiento del repositorio mock para simular una excepción al guardar
-    //podría ser una excepción creada por nosotros o cualquier unchecked
-    when(productoRepository.save(productoFalseado)).thenThrow(new RuntimeException("Error al guardar el producto"));
+        Producto productoActualizado = productoService.actualizarStock(id, stock);
 
-    // Llama al método guardarProducto
-    ModelResponse response = productoService.guardarProducto(productoFalseado);
+        assertThat(productoActualizado).isNotNull();
+        assertThat(productoActualizado.getStock()).isEqualTo(100);
+    }
 
-    // Verifica que se devuelva un mensaje de error
-    assertThat(response.getMensaje()).isEqualTo("Error al guardar producto");
-    assertThat(response.getTipo()).isEqualTo("Tipo: java.lang.RuntimeException"); // El tipo de excepción
-}
 
-@Test
-void testActualizarProducto() {
-    // Configuramos el comportamiento del repositorio mock
-    when(productoRepository.findById(id)).thenReturn(Optional.of(productoFalseado));
+    @Test
+    void testGuardarProducto() {
+        // Configura el comportamiento del repositorio mock
+        when(productoRepository.save(productoFalseado)).thenReturn(productoFalseado);
 
-    // Producto de prueba con un nombre modificado
-    String piluso = "piluso";
-    Producto productoModificado = new Producto(id, piluso);
+        // Llama al método guardarProducto
+        ModelResponse response = productoService.guardarProducto(productoFalseado);
 
-    // Llamamos al método actualizarProducto del servicio
-    Producto resultado = productoService.actualizarProducto(id, productoModificado);
+        // Verifica que se devuelva un mensaje de éxito
+        assertThat(response.getMensaje()).isEqualTo("Producto guardado");
+        assertThat(response.getTipo()).isEqualTo("Operación: guardarProducto");
+    }
 
-    // Verificamos que se obtenga un resultado no nulo
-    assertThat(resultado).isNotNull();
+    @Test
+    void testGuardarProductoError() {
+        // Configuramos el comportamiento del repositorio mock para simular una excepción al guardar
+        //podría ser una excepción creada por nosotros o cualquier unchecked
+        when(productoRepository.save(productoFalseado)).thenThrow(new RuntimeException("Error al guardar el producto"));
 
-    // Verificamos que el nombre del producto sea igual al nuevo nombre
-    assertThat(resultado.getNombre()).isEqualTo("piluso");
+        // Llama al método guardarProducto
+        ModelResponse response = productoService.guardarProducto(productoFalseado);
 
-    // Verificamos que el mock del repositorio se haya llamado con el ID correcto, 
-    // como queremos verificar el mock, usamos verify, que es una función de Mockito
-    verify(productoRepository).findById(id);
-}
+        // Verifica que se devuelva un mensaje de error
+        assertThat(response.getMensaje()).isEqualTo("Error al guardar producto");
+        assertThat(response.getTipo()).isEqualTo("Tipo: java.lang.RuntimeException"); // El tipo de excepción
+    }
+
+    @Test
+    void testActualizarProducto() {
+        // Configuramos el comportamiento del repositorio mock
+        when(productoRepository.findById(id)).thenReturn(Optional.of(productoFalseado));
+
+        // Producto de prueba con un nombre modificado
+        String piluso = "piluso";
+        Producto productoModificado = new Producto(id, piluso);
+
+        // Llamamos al método actualizarProducto del servicio
+        Producto resultado = productoService.actualizarProducto(id, productoModificado);
+
+        // Verificamos que se obtenga un resultado no nulo
+        assertThat(resultado).isNotNull();
+
+        // Verificamos que el nombre del producto sea igual al nuevo nombre
+        assertThat(resultado.getNombre()).isEqualTo("piluso");
+
+        // Verificamos que el mock del repositorio se haya llamado con el ID correcto, 
+        // como queremos verificar el mock, usamos verify, que es una función de Mockito
+        verify(productoRepository).findById(id);
+    }
 
     @Test
     void testEliminarProducto() {
